@@ -97,35 +97,53 @@ if __name__ == "__main__":
     # Register the new root work source
     core.set_root_work_source(newroot)
     # Add example work sources to their group
+
+    # "BCJSONRPCWorkSource(core)" dictates that you wish to run a GETWORK legacy mining operation.
     worksource = BCJSONRPCWorkSource(core)
+    #this tells the worker what blockchain to use. it only uses sha now but it appears this can be recoded for scrypt
     worksource.set_blockchain(blockchain)
+    #this line tells us what we want to NAME the instance (for ease in sorting later)
     worksource.settings.name = "BTCMP (donation)"
+    #tells us where in the queue we would like it
     worksource.settings.priority = 1
+    #this is the actual hostname for the pool.
     worksource.settings.host = "rr.btcmp.com"
+    #this is the port the pool runs on
     worksource.settings.port = 7332
+    #this is the worker name 
     worksource.settings.username = "TheSeven.worker"
+    #this is said worrkers password
     worksource.settings.password = "TheSeven"
+    #this tells the miner to apply the settings we added
     worksource.apply_settings()
+    #this puts it all together and adds it to our list
     examplesources.add_work_source(worksource)
-    worksource = BCJSONRPCWorkSource(core)
+    
+
+	  #this is my example of how to set up a STRATUM work source
+	  # "StratumWorkSource(core)" tells the miner that we want to use stratum and not getwork
+	  worksource = StratumWorkSource(core)
+    #this tells the worker what blockchain to use. it only uses sha now but it appears this can be recoded for scrypt
     worksource.set_blockchain(blockchain)
-    worksource.settings.name = "BTCGuild (donation)"
+    #this line tells us what we want to NAME the instance (for ease in sorting later)
+    worksource.settings.name = "Joes Pool Donation"
+    #tells us where in the queue we would like it
     worksource.settings.priority = 1
-    worksource.settings.host = "mine3.btcguild.com"
-    worksource.settings.username = "TheSeven_guest"
+    #this is the actual hostname for the pool.
+    worksource.settings.host = "pool.cr.rs"
+    #this is the port the pool runs on
+    worksource.settings.port = 4334
+    #this is the worker name 
+    worksource.settings.username = "Joe.DonateMPBM"
+    #this is said worrkers password
     worksource.settings.password = "x"
+    #this tells the server NOT to listen for longpoll connections / if it was set to 1 you would.
+    #longpoll is used to update workers to tell them there is a new block and new work for them
+    #that way they do not waste their time on old work
     worksource.settings.longpollconnections = 0
+    #this tells the miner to apply the settings we added
     worksource.apply_settings()
-    examplesources.add_work_source(worksource)
-    worksource = BCJSONRPCWorkSource(core)
-    worksource.set_blockchain(blockchain)
-    worksource.settings.name = "Eligius (donation)"
-    worksource.settings.priority = 1
-    worksource.settings.host = "mining.eligius.st"
-    worksource.settings.port = 8337
-    worksource.settings.username = "1FZMW7BCzExsLmErT2o8oCMLcMYKwd7sHQ"
-    worksource.settings.longpollconnections = 0
-    worksource.apply_settings()
+    #this puts it all together and adds it to our list
     examplesources.add_work_source(worksource)
 
   def stop(signum, frame):
